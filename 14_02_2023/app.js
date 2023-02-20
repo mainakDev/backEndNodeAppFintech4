@@ -1,28 +1,16 @@
-//create a server
+//create a serverrequire
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-//middleware
-app.use('/user-account',(req, res, next) => {
-    console.log('Inside another middleware');
-    // next();
-    res.send('<h1>user account Page</h1>');
-});
+app.use(bodyParser.urlencoded({extended: false}));
 
-app.use('/add-products', (req, res, next) => {
-    res.send('<h1>Add Products Page</h1>');
-});
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
-app.use('/products', (req, res, next) => {
-    res.send('<h1>Products Page</h1>');
-});
+app.use(adminRoutes);
+app.use(shopRoutes);
 
-//middleware
-app.use('/', (req, res, next) => {
-    // console.log('Inside middleware');
-    // next();
-    res.send('<h1>Home Page</h1>');
-});
 
 app.listen(3000);
