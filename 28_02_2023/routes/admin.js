@@ -23,17 +23,3 @@ router.post('/add-product', (req, res, next) => {
 
 exports.routes = router;
 exports.product = product;
-
-
-exportedObject = {
-  routes: router,
-  product: product
-}
-
-person = {
-  name: 'XYZ',
-  phone: '123'
-
-}
-
-person.phone
