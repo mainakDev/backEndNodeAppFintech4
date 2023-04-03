@@ -1,20 +1,8 @@
 const express = require('express')
+const {getUsers,createUser,updateUser,deleteUser} = require('../controllers/userController')
 const router = express.Router()
 
-router.get('/api/users', (req, res, next) => {
-    res.send('GET Route');
-})
-
-router.post('/api/users', (req, res, next) => {
-    res.send('POST Route');
-})
-
-router.put('/api/users/:id', (req, res, next) => {
-    res.send('PUT Route');
-})
-
-router.delete('/api/users/:id', (req, res, next) => {
-    res.send('DELETE Route');
-})
+router.route('/').get(getUsers).post(createUser)
+router.route('/:id').delete(deleteUser).put(updateUser)
 
 module.exports = router
