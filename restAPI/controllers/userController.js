@@ -1,12 +1,26 @@
+const User = require('../models/userModels')
+const asyncHandler = require('express-async-handler')
 
+const getUsers = asyncHandler(async(req, res, next) => {
+    const allUser = await User.find();
+    res.json(allUser);
+})
 
-const getUsers = (req, res, next) => {
-    res.json({message: 'GET Route'});
-}
-
-const createUser = (req, res, next) => {
-    res.json({message: 'POST Route'});
-}
+const createUser = asyncHandler(async(req, res, next) => {
+    if(!req.body.username){
+        res.status(400)
+        throw new Error('Username not found')
+    } else if(!req.body.password){
+        res.status(400)
+        throw new Error('Password not found')
+    }
+    const user = await User.create({
+        username: req.body.username,
+        password: req.body.password
+    })
+    res.json(user)
+    // res.json({message: `User ${req.body.username} created`})
+})
 
 const updateUser = (req, res, next) => {
     res.json({message: 'PUT Route'});
