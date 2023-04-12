@@ -22,13 +22,25 @@ const createUser = asyncHandler(async(req, res, next) => {
     // res.json({message: `User ${req.body.username} created`})
 })
 
-const updateUser = (req, res, next) => {
-    res.json({message: 'PUT Route'});
-}
+const updateUser = asyncHandler(async(req, res, next) => {
+    const user = await User.findById(req.params.id)
+    if(!user){
+        res.status(400)
+        throw new Error('User doesnt exist')
+    }
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    res.json(updatedUser)
+})
 
-const deleteUser = (req, res, next) => {
-    res.json({message: 'DELETE Route'});
-}
+const deleteUser = asyncHandler(async(req, res, next) => {
+    const user = await User.findById(req.params.id)
+    if(!user){
+        res.status(400)
+        throw new Error('User doesnt exist')
+    }
+    await user.deleteOne()
+    res.json({message: `DELETED user ${user.username}`});
+})
 
 module.exports = {
     getUsers,
